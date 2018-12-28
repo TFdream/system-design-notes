@@ -16,4 +16,4 @@
 | 第009期 | 奖品兑换系统设计 | user-award-exchange | 敬请期待... | 
 | 第010期 | 用户中奖动态功能设计 | user-award-trending | 敬请期待... | 
 | 第011期 | 邀请好友助力(微信内)系统设计 | user-friend-help | 敬请期待... | 
-| 第011期 | 红包系统设计 | redpacket-service | 敬请期待... | 
+| 第012期 | 红包系统设计 | redpacket-service | 敬请期待... | 
