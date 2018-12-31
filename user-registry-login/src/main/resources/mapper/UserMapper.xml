@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.dreamstudio.architecture.user.dao.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="io.dreamstudio.architecture.user.dao.model.UserDO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
+        <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl" />
+        <result column="id_verified" jdbcType="TINYINT" property="idVerified" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="id_card_type" jdbcType="TINYINT" property="idCardType" />
+        <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, mobile, nickname, login_password, head_img_url, id_verified, real_name,
+        id_card_type, id_card_no, status, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="io.dreamstudio.architecture.user.dao.model.UserDO" useGeneratedKeys="true" keyProperty="id">
+        insert into `user` (
+        mobile,
+        nickname,
+        login_password,
+        head_img_url,
+        id_verified,
+        real_name,
+        id_card_type,
+        id_card_no,
+        status
+        create_time,
+        update_time)
+        values (
+        #{mobile},
+        #{nickname},
+        #{loginPassword},
+        #{headImgUrl},
+        #{idVerified},
+        #{realName},
+        #{idCardType},
+        #{idCardNo},
+        #{status},
+        #{createTime},
+        #{updateTime})
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM `user`
+        WHERE  id = #{id}
+    </select>
+
+    <select id="selectUserByMobile" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM `user`
+        WHERE  mobile = #{mobile}
+    </select>
+
+</mapper>
