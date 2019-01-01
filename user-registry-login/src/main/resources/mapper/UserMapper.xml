@@ -11,6 +11,8 @@
         <result column="real_name" jdbcType="VARCHAR" property="realName" />
         <result column="id_card_type" jdbcType="TINYINT" property="idCardType" />
         <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+        <result column="utm_source" jdbcType="VARCHAR" property="utmSource" />
+        <result column="invitation_user_id" jdbcType="BIGINT" property="invitationUserId" />
         <result column="status" jdbcType="TINYINT" property="status" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -18,7 +20,7 @@
 
     <sql id="Base_Column_List">
         id, mobile, nickname, login_password, head_img_url, id_verified, real_name,
-        id_card_type, id_card_no, status, create_time, update_time
+        id_card_type, id_card_no, utm_source, invitation_user_id, status, create_time, update_time
     </sql>
 
     <insert id="insert" parameterType="io.dreamstudio.architecture.user.dao.model.UserDO" useGeneratedKeys="true" keyProperty="id">

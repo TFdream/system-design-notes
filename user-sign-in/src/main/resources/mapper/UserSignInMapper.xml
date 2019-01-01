@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.dreamstudio.architecture.signin.dao.mapper.UserSignInMapper">
+    <resultMap id="BaseResultMap" type="io.dreamstudio.architecture.signin.dao.model.UserSignInDO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <id column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="last_sign_in_date" jdbcType="INTEGER" property="lastSignInDate" />
+        <result column="continuous_sign_in_days" jdbcType="INTEGER" property="continuousSignInDays" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, nickname, last_sign_in_date, continuous_sign_in_days, version, create_time, update_time
+    </sql>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM `user_sign_in`
+        WHERE  user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="io.dreamstudio.architecture.signin.dao.model.UserSignInDO" useGeneratedKeys="true" keyProperty="id">
+        insert into `user_sign_in` (
+        user_id,
+        nickname,
+        last_sign_in_date,
+        continuous_sign_in_days,
+        version,
+        create_time,
+        update_time)
+        values (
+        #{userId},
+        #{nickname},
+        #{lastSignInDate},
+        #{continuousSignInDays},
+        #{version},
+        #{createTime},
+        #{updateTime})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="io.dreamstudio.architecture.signin.dao.model.UserSignInDO">
+        update `user_sign_in`
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="lastSignInDate != null">
+                last_sign_in_date = #{lastSignInDate},
+            </if>
+            <if test="continuousSignInDays != null">
+                continuous_sign_in_days = #{continuousSignInDays},
+            </if>
+            version = version + 1,
+            update_time = now()
+        </set>
+        where id = #{id}
+        AND version = #{version}
+    </update>
+
+</mapper>

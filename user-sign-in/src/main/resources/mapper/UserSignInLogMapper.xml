@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.dreamstudio.architecture.signin.dao.mapper.UserSignInLogMapper">
+    <resultMap id="BaseResultMap" type="io.dreamstudio.architecture.signin.dao.model.UserSignInLogDO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <id column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="sign_in_date" jdbcType="INTEGER" property="signInDate" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, sign_in_date, create_time, update_time
+    </sql>
+
+    <select id="selectByUserIdAndDate" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM `user_sign_in_log`
+        WHERE  user_id = #{userId}
+        AND sign_in_date = #{signInDate}
+    </select>
+
+    <insert id="insert" parameterType="io.dreamstudio.architecture.signin.dao.model.UserSignInDO" useGeneratedKeys="true" keyProperty="id">
+        insert into `user_sign_in_log` (
+        user_id,
+        sign_in_date,
+        create_time,
+        update_time)
+        values (
+        #{userId},
+        #{signInDate},
+        #{createTime},
+        #{updateTime})
+    </insert>
+
+</mapper>

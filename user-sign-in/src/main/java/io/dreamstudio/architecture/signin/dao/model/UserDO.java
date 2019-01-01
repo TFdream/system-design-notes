@@ -1,4 +1,4 @@
-package io.dreamstudio.architecture.user.dao.model;
+package io.dreamstudio.architecture.signin.dao.model;
 
 import java.util.Date;
 
