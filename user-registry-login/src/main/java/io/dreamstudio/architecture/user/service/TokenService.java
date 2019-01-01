@@ -29,7 +29,7 @@ public class TokenService {
     @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
 
-    public UserToken createToken(Long userId) {
+    public String createToken(Long userId) {
         ClientTypeEnum clientType  = ClientTypeEnum.APP;
         DateTime now = DateTime.now();
         DateTime expireAt = now.plusDays(3);
@@ -45,7 +45,7 @@ public class TokenService {
         String key = RedisConstant.getUserTokenKey(userId);
         stringRedisTemplate.opsForHash().put(key, token, clientType.name());
         stringRedisTemplate.expireAt(key, expireAt.toDate());
-        return userToken;
+        return token;
     }
 
     public UserToken decodeToken(String token) {

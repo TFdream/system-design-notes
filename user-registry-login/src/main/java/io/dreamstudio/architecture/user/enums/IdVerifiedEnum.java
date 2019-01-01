@@ -3,14 +3,14 @@ package io.dreamstudio.architecture.user.enums;
 /**
  * @author Ricky Fung
  */
-public enum ClientTypeEnum {
-    APP(1, "App端"),
-    PC(2, "网站"),
-    H5(3, "H5"),
+public enum IdVerifiedEnum {
+    NEW(1, "未实名"),
+    FAILURE(2, "实名认证失败"),
+    SUCCESS(3, "已实名"),
     ;
     private int value;
     private String desc;
-    ClientTypeEnum(int value, String desc) {
+    IdVerifiedEnum(int value, String desc) {
         this.value = value;
         this.desc = desc;
     }

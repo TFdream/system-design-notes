@@ -1,17 +1,18 @@
 package io.dreamstudio.architecture.user.web.controller;
 
+import io.dreamstudio.architecture.user.annotation.RequiredAuth;
 import io.dreamstudio.architecture.user.enums.LoginTypeEnum;
 import io.dreamstudio.architecture.user.service.UserService;
+import io.dreamstudio.architecture.user.web.context.RequestContext;
+import io.dreamstudio.architecture.user.web.context.RequestContextHolder;
 import io.dreamstudio.architecture.user.web.vo.AuthCodeRequestVO;
 import io.dreamstudio.architecture.user.web.vo.LoginRequestVO;
+import io.dreamstudio.architecture.user.web.vo.RegistryRequestVO;
 import io.dreamstudio.common.ApiResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -25,6 +26,13 @@ public class UserController {
 
     @Resource(name = "userService")
     private UserService userService;
+
+    @RequiredAuth
+    @GetMapping("/info")
+    public ApiResult info() {
+        RequestContext rc = RequestContextHolder.getContext();
+        return userService.getUserInfo(rc.getUserId());
+    }
 
     @PostMapping("/login")
     public ApiResult login(@RequestBody LoginRequestVO req) {
@@ -51,6 +59,16 @@ public class UserController {
         }
         try {
             return userService.login(req);
+        } catch (Exception e) {
+            logger.error("用户服务-用户登录异常, mobile:{}", req.getMobile(), e);
+        }
+        return ApiResult.systemError();
+    }
+
+    @PostMapping("/registry")
+    public ApiResult registry(@RequestBody RegistryRequestVO req) {
+        try {
+            return userService.registry(req);
         } catch (Exception e) {
             logger.error("用户服务-用户登录异常, mobile:{}", req.getMobile(), e);
         }
