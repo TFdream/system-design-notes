@@ -10,6 +10,10 @@ public class UserToken {
     private Date issuedAt;
     private Date expireAt;
     private Date lastLoginTime;
+    /**
+     * 续约次数
+     */
+    private Integer renewalTimes;
     private Integer clientType;
 
     public Long getUserId() {
@@ -42,6 +46,14 @@ public class UserToken {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public Integer getRenewalTimes() {
+        return renewalTimes;
+    }
+
+    public void setRenewalTimes(Integer renewalTimes) {
+        this.renewalTimes = renewalTimes;
     }
 
     public Integer getClientType() {

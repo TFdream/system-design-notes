@@ -1,10 +1,13 @@
 package io.dreamstudio.architecture.user.service;
 
+import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.contant.RedisConstant;
 import io.dreamstudio.architecture.user.dao.model.UserDO;
+import io.dreamstudio.architecture.user.model.UserToken;
 import io.dreamstudio.architecture.user.web.vo.*;
 import io.dreamstudio.common.ApiResult;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +47,15 @@ public class UserService {
     }
 
     /**
+     * 登出
+     * @param userId
+     * @return
+     */
+    public ApiResult logout(Long userId) {
+        return ApiResult.ok();
+    }
+
+    /**
      * 用户登录接口
      * @param req
      * @return
@@ -68,7 +80,11 @@ public class UserService {
         Long userId = userDO.getId();
         logger.info("用户服务-登录接口, 用户mobile:{}, userId:{} 身份认证通过", mobile, userId);
 
-        String token = tokenService.createToken(userId);
+        DateTime now = DateTime.now();
+        DateTime expireAt = now.plusDays(Constant.DEFAULT_TOKEN_EXPIRY_DAYS);
+        long tll = tokenService.getTtl(now, expireAt);
+        String token = tokenService.refreshToken(userId, now.toDate(), expireAt.toDate(), now.toDate(), tll);
+
         LoginResultVO resultVO = new LoginResultVO();
         resultVO.setToken(token);
         resultVO.setNickname(userDO.getNickname());
@@ -148,6 +164,30 @@ public class UserService {
             resultVO.setSuccess(Boolean.TRUE);
             return ApiResult.ok(resultVO);
         }
+    }
+
+    public ApiResult<TokenRenewalResultVO> refreshToken(String token) {
+        //1.解密token
+        UserToken userToken = tokenService.decodeToken(token);
+        Long userId = userToken.getUserId();
+        logger.info("用户服务-请求token续约, 用户userId:{}, randomCode:{}", userId, token);
+
+        String serverToken = tokenService.getServerToken(userId);
+        if (!token.equals(serverToken)) {
+            return ApiResult.failure(1001, "失效token");
+        }
+        //2.最大续约次数
+        if (userToken.getRenewalTimes().intValue() > Constant.MAX_RENEWAL_TIMES) {
+            TokenRenewalResultVO resultVO = new TokenRenewalResultVO();
+            resultVO.setToken(token);
+            return ApiResult.ok(resultVO);
+        }
+        DateTime now = DateTime.now();
+        DateTime expireAt = new DateTime(userToken.getExpireAt()).plusDays(1);
+        long tll = tokenService.getTtl(now, expireAt);
+        //3.延长token有效期
+        tokenService.refreshToken(userId, userToken.getIssuedAt(), expireAt.toDate(), now.toDate(), tll);
+        return ApiResult.ok();
     }
 
     /**

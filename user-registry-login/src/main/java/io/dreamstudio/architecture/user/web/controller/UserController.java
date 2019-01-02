@@ -1,6 +1,7 @@
 package io.dreamstudio.architecture.user.web.controller;
 
 import io.dreamstudio.architecture.user.annotation.RequiredAuth;
+import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.enums.LoginTypeEnum;
 import io.dreamstudio.architecture.user.service.UserService;
 import io.dreamstudio.architecture.user.web.context.RequestContext;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ricky Fung
@@ -32,6 +34,22 @@ public class UserController {
     public ApiResult info() {
         RequestContext rc = RequestContextHolder.getContext();
         return userService.getUserInfo(rc.getUserId());
+    }
+
+    @GetMapping("/token-renewal")
+    public ApiResult refreshToken(HttpServletRequest request) {
+        String token = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        if (StringUtils.isEmpty(token)) {
+            return ApiResult.invalidParam();
+        }
+        return userService.refreshToken(token);
+    }
+
+    @RequiredAuth
+    @GetMapping("/logout")
+    public ApiResult logout(HttpServletRequest request) {
+        RequestContext rc = RequestContextHolder.getContext();
+        return userService.logout(rc.getUserId());
     }
 
     @PostMapping("/login")

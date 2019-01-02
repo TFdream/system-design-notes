@@ -6,16 +6,20 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.contant.RedisConstant;
 import io.dreamstudio.architecture.user.enums.ClientTypeEnum;
 import io.dreamstudio.architecture.user.model.UserToken;
 import io.dreamstudio.architecture.user.web.context.InvalidTokenException;
 import io.dreamstudio.common.util.JsonUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Ricky Fung
@@ -29,22 +33,28 @@ public class TokenService {
     @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate stringRedisTemplate;
 
-    public String createToken(Long userId) {
+    /**
+     * 创建/续约token
+     * @param userId
+     * @param issuedAt
+     * @param expireAt
+     * @param now
+     * @return
+     */
+    public String refreshToken(Long userId, Date issuedAt, Date expireAt, Date now, long ttlSeconds) {
         ClientTypeEnum clientType  = ClientTypeEnum.APP;
-        DateTime now = DateTime.now();
-        DateTime expireAt = now.plusDays(3);
 
         UserToken userToken = new UserToken();
         userToken.setUserId(userId);
-        userToken.setIssuedAt(now.toDate());
-        userToken.setExpireAt(expireAt.toDate());
-        userToken.setLastLoginTime(now.toDate());
+        userToken.setIssuedAt(issuedAt);
+        userToken.setExpireAt(expireAt);
+        userToken.setLastLoginTime(now);
         userToken.setClientType(clientType.getValue());
 
         String token = genToken(userToken);
         String key = RedisConstant.getUserTokenKey(userId);
-        stringRedisTemplate.opsForHash().put(key, token, clientType.name());
-        stringRedisTemplate.expireAt(key, expireAt.toDate());
+
+        stringRedisTemplate.opsForValue().set(key, token, ttlSeconds, TimeUnit.SECONDS);
         return token;
     }
 
@@ -52,6 +62,15 @@ public class TokenService {
         String subject = verifyToken(token);
         UserToken userToken = JsonUtils.parseObject(subject, UserToken.class);
         return userToken;
+    }
+
+    public String getServerToken(Long userId) {
+        String key = RedisConstant.getUserTokenKey(userId);
+        return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    public long getTtl(DateTime now, DateTime expireAt) {
+        return Seconds.secondsBetween(now, expireAt).getSeconds();
     }
 
     private String genToken(UserToken userToken) {
@@ -83,4 +102,5 @@ public class TokenService {
             throw new InvalidTokenException("验证token失败", e);
         }
     }
+
 }

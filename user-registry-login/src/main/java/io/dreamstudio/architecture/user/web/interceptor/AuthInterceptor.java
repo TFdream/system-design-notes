@@ -2,6 +2,7 @@ package io.dreamstudio.architecture.user.web.interceptor;
 
 import io.dreamstudio.architecture.user.annotation.OptionalAuth;
 import io.dreamstudio.architecture.user.annotation.RequiredAuth;
+import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.model.UserToken;
 import io.dreamstudio.architecture.user.service.TokenService;
 import io.dreamstudio.architecture.user.web.context.DefaultRequestContext;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ricky Fung
  */
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-    private static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Resource(name = "tokenService")
     private TokenService tokenService;
@@ -52,7 +52,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     }
 
     private boolean checkAuth(HttpServletRequest request, boolean required) {
-        String token = request.getHeader(AUTHORIZATION_HEADER);
+        String token = request.getHeader(Constant.AUTHORIZATION_HEADER);
         if (StringUtils.isEmpty(token) && required) {
             throw new InvalidTokenException("token为空");
         }
