@@ -29,11 +29,11 @@ public class UserTxService {
         return true;
     }
 
-    public UserDO createUser(String mobile, Date now) {
+    public UserDO createUser(String mobile, String nickname, String password, Date now) {
         UserDO userDO = new UserDO();
         userDO.setMobile(mobile);
-        userDO.setNickname(StringUtils.EMPTY);
-        userDO.setLoginPassword(StringUtils.EMPTY);
+        userDO.setNickname(nickname);
+        userDO.setLoginPassword(password);
         userDO.setHeadImgUrl(StringUtils.EMPTY);
 
         userDO.setIdVerified(IdVerifiedEnum.NEW.getValue());
