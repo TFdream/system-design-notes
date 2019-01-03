@@ -33,7 +33,7 @@
         real_name,
         id_card_type,
         id_card_no,
-        status
+        status,
         create_time,
         update_time)
         values (
