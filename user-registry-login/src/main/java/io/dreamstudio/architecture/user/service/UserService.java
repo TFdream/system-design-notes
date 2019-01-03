@@ -3,6 +3,7 @@ package io.dreamstudio.architecture.user.service;
 import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.contant.RedisConstant;
 import io.dreamstudio.architecture.user.dao.model.UserDO;
+import io.dreamstudio.architecture.user.enums.AuthCodeType;
 import io.dreamstudio.architecture.user.model.UserToken;
 import io.dreamstudio.architecture.user.web.vo.*;
 import io.dreamstudio.common.ApiResult;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -68,7 +70,8 @@ public class UserService {
         }
 
         //校验验证码
-        String key = RedisConstant.getUserLoginCodeKey(mobile);
+        AuthCodeType authCodeType = AuthCodeType.LOGIN;
+        String key = RedisConstant.getUserAuthCodeKey(mobile, authCodeType.getValue());
         String randomCode = stringRedisTemplate.opsForValue().get(key);
         if (StringUtils.isEmpty(randomCode)) {
             return ApiResult.failure(1000, "验证码已失效");
@@ -83,7 +86,10 @@ public class UserService {
         DateTime now = DateTime.now();
         DateTime expireAt = now.plusDays(Constant.DEFAULT_TOKEN_EXPIRY_DAYS);
         long tll = tokenService.getTtl(now, expireAt);
-        String token = tokenService.refreshToken(userId, now.toDate(), expireAt.toDate(), now.toDate(), tll);
+        String token = tokenService.refreshToken(userId, now.toDate(), expireAt.toDate(), now.toDate(), 0, tll);
+
+        //登录成功后删除
+        stringRedisTemplate.delete(key);
 
         LoginResultVO resultVO = new LoginResultVO();
         resultVO.setToken(token);
@@ -105,8 +111,8 @@ public class UserService {
         if (userDO!=null) {
             return ApiResult.failure(1000, "手机号已注册");
         }
-
-        String key = RedisConstant.getUserRegistryCodeKey(mobile);
+        AuthCodeType authCodeType = AuthCodeType.REGISTRY;
+        String key = RedisConstant.getUserAuthCodeKey(mobile, authCodeType.getValue());
         String randomCode = stringRedisTemplate.opsForValue().get(key);
         if (StringUtils.isEmpty(randomCode)) {
             return ApiResult.failure(1001, "验证码已失效");
@@ -117,9 +123,12 @@ public class UserService {
         }
 
         //保存用户注册信息
-        userDO = userTxService.createUser(mobile, now);
+        userDO = userTxService.createUser(mobile, req.getNickname(), req.getPassword(), now);
         userTxService.saveUser(userDO);
-        logger.info("用户服务-注册接口, 用户mobile:{} 注册成功", mobile);
+        logger.info("用户服务-注册接口, 用户mobile:{} 注册成功, 用户id:{}", mobile, userDO.getId());
+
+        //验证码已使用
+        stringRedisTemplate.delete(key);
 
         SuccessResultVO resultVO = new SuccessResultVO();
         resultVO.setSuccess(Boolean.TRUE);
@@ -129,8 +138,10 @@ public class UserService {
     public ApiResult<SuccessResultVO> getAuthCode(AuthCodeRequestVO req) {
         String mobile = req.getMobile();
         UserDO userDO = userTxService.getUserByMobile(mobile);
+        AuthCodeType authCodeType = AuthCodeType.LOGIN;
         if (userDO==null) {
             //注册流程, 发送注册验证码
+            authCodeType = AuthCodeType.REGISTRY;
             //1.生成4位随机数
             String randomCode = genRandomCode(4);
             logger.info("用户服务-发送注册验证码, mobile:{}, randomCode:{}", mobile, randomCode);
@@ -139,7 +150,7 @@ public class UserService {
             sendSmsCode(mobile, randomCode);
 
             //3.redis中记录最新的验证码
-            String key = RedisConstant.getUserRegistryCodeKey(mobile);
+            String key = RedisConstant.getUserAuthCodeKey(mobile, authCodeType.getValue());
             //过期时间5分钟
             stringRedisTemplate.opsForValue().set(key, randomCode, 5, TimeUnit.MINUTES);
 
@@ -156,7 +167,7 @@ public class UserService {
             sendSmsCode(mobile, randomCode);
 
             //3.redis中记录最新的验证码
-            String key = RedisConstant.getUserLoginCodeKey(mobile);
+            String key = RedisConstant.getUserAuthCodeKey(mobile, authCodeType.getValue());
             //过期时间5分钟
             stringRedisTemplate.opsForValue().set(key, randomCode, 5, TimeUnit.MINUTES);
 
@@ -177,7 +188,8 @@ public class UserService {
             return ApiResult.failure(1001, "失效token");
         }
         //2.最大续约次数
-        if (userToken.getRenewalTimes().intValue() > Constant.MAX_RENEWAL_TIMES) {
+        int renewalTimes = userToken.getRenewalTimes()!=null ? userToken.getRenewalTimes() : 0;
+        if (renewalTimes > Constant.MAX_RENEWAL_TIMES) {
             TokenRenewalResultVO resultVO = new TokenRenewalResultVO();
             resultVO.setToken(token);
             return ApiResult.ok(resultVO);
@@ -185,9 +197,14 @@ public class UserService {
         DateTime now = DateTime.now();
         DateTime expireAt = new DateTime(userToken.getExpireAt()).plusDays(1);
         long tll = tokenService.getTtl(now, expireAt);
+        renewalTimes++;
+
         //3.延长token有效期
-        tokenService.refreshToken(userId, userToken.getIssuedAt(), expireAt.toDate(), now.toDate(), tll);
-        return ApiResult.ok();
+        String refreshToken = tokenService.refreshToken(userId, userToken.getIssuedAt(), expireAt.toDate(), now.toDate(), renewalTimes, tll);
+
+        TokenRenewalResultVO resultVO = new TokenRenewalResultVO();
+        resultVO.setToken(refreshToken);
+        return ApiResult.ok(resultVO);
     }
 
     /**
@@ -201,7 +218,12 @@ public class UserService {
     }
 
     private String genRandomCode(int length) {
-        return null;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i=0; i<length; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
     }
 
 }
