@@ -11,7 +11,8 @@ CREATE TABLE `activity` (
   `create_time` datetime NOT NULL COMMENT '创建日期',
   `update_time` datetime NOT NULL COMMENT '修改日期',
   `version` int(11) NOT NULL DEFAULT 1 COMMENT '版本号',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_type` (`type`, `status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动配置表';
 
 CREATE TABLE `activity_award` (
@@ -32,5 +33,28 @@ CREATE TABLE `activity_award` (
   `update_time` datetime NOT NULL COMMENT '修改日期',
   `version` int(11) NOT NULL DEFAULT 1 COMMENT '版本号',
   PRIMARY KEY (`id`),
-  KEY `activity_id` (`activity_id`)
+  KEY `idx_activity_id` (`activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='奖品配置表';
+
+CREATE TABLE `activity_user_award` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `activity_id` bigint(20) NOT NULL COMMENT '活动ID',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `user_name` varchar(40) NOT NULL COMMENT '用户昵称',
+  `award_id` bigint(20) NOT NULL COMMENT '奖品ID',
+  `award_name` varchar(255) NOT NULL COMMENT '奖品名称',
+  `award_type` smallint(4) unsigned NOT NULL COMMENT '奖品类型, 1:红包, 2:实物, 3:虚拟充值卡',
+  `award_price` varchar(20) NOT NULL DEFAULT '' COMMENT '奖品单价',
+  `quantity` int(11) NOT NULL DEFAULT 1 COMMENT '奖品数量',
+  `visible` int(4) NOT NULL,
+  `receiver_name` varchar(40) NOT NULL DEFAULT '' COMMENT '收件人姓名',
+  `receiver_mobile` varchar(40) NOT NULL DEFAULT '' COMMENT '收件人手机号',
+  `receiver_address` varchar(255) NOT NULL DEFAULT '' COMMENT '邮寄地址',
+  `status` int(4) NOT NULL COMMENT '奖品状态, 1:待领取, 2:已领取, 3:作废',
+  `create_time` datetime NOT NULL COMMENT '创建日期',
+  `update_time` datetime NOT NULL COMMENT '修改日期',
+  `version` int(11) NOT NULL DEFAULT 1 COMMENT '版本号',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_activity_id` (`activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户奖品表';
