@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.dreamstudio.architecture.user.contant.Constant;
 import io.dreamstudio.architecture.user.contant.RedisConstant;
 import io.dreamstudio.architecture.user.enums.ClientTypeEnum;
 import io.dreamstudio.architecture.user.model.UserToken;
@@ -41,7 +40,7 @@ public class TokenService {
      * @param now
      * @return
      */
-    public String refreshToken(Long userId, Date issuedAt, Date expireAt, Date now, long ttlSeconds) {
+    public String refreshToken(Long userId, Date issuedAt, Date expireAt, Date now, int renewalTimes, long ttlSeconds) {
         ClientTypeEnum clientType  = ClientTypeEnum.APP;
 
         UserToken userToken = new UserToken();
@@ -49,6 +48,7 @@ public class TokenService {
         userToken.setIssuedAt(issuedAt);
         userToken.setExpireAt(expireAt);
         userToken.setLastLoginTime(now);
+        userToken.setRenewalTimes(renewalTimes);
         userToken.setClientType(clientType.getValue());
 
         String token = genToken(userToken);
