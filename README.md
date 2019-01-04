@@ -7,7 +7,7 @@
 | 第000期 | 开篇词：大道至简 |  | 已完成 | 
 | 第001期 | 用户中心 - 用户注册/登录系统设计 | [user-registry-login](user-registry-login) | 已完成 | 
 | 第002期 | 用户中心 - 用户签到系统设计 | [user-sign-in](user-sign-in) | 已完成 | 
-| 第003期 | 用户中心 - 邀请好友系统设计 | user-invite-friends(user-invite-friends) | 敬请期待... | 
+| 第003期 | 用户中心 - 邀请好友系统设计 | [user-invite-friends](user-invite-friends) | 敬请期待... | 
 | 第004期 | 排行榜系统设计 | race-rank | 敬请期待... | 
 | 第005期 | 抽奖码系统设计 | lucky-star | 敬请期待... | 
 | 第006期 | 刮刮卡/大转盘/砸宝箱 类系统设计 | select-gifts | 敬请期待... | 
