@@ -29,6 +29,7 @@
         <module>common-utils</module>
         <module>user-registry-login</module>
         <module>user-sign-in</module>
+        <module>user-invite-friends</module>
         <module>select-gifts</module>
     </modules>
 

@@ -14,9 +14,9 @@ spring:
       maxWait: 5000
 
   redis:
-    host: localhost
-    port: 6379
-    password: 123456
+    host: 10.10.175.136
+    port: 6380
+    password: iqianjinTest001*
     timeout: 5s
     lettuce:
       pool:

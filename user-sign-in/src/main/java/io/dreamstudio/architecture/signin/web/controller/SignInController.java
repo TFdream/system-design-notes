@@ -25,7 +25,7 @@ public class SignInController {
         return signInService.doSignIn(userId, now);
     }
 
-    @GetMapping("/month")
+    @GetMapping("/history")
     public ApiResult getSignRecord() {
         return ApiResult.systemError();
     }

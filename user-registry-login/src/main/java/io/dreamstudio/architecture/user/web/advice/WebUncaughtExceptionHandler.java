@@ -1,8 +1,8 @@
 package io.dreamstudio.architecture.user.web.advice;
 
+import io.dreamstudio.common.ApiResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 @ResponseBody
 public class WebUncaughtExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(WebExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(WebUncaughtExceptionHandler.class);
 
     @ExceptionHandler
-    public Result unknownException(Exception e) {
+    public ApiResult unknownException(Exception e) {
         log.error("发生了未知异常", e);
-        return Result.systemError();
+        return ApiResult.systemError();
     }
 }
