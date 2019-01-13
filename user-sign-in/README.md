@@ -1,11 +1,11 @@
 ## 应用场景
 例如 某东的用户签到：
 
-!()[../docs/images/sign_in/sign_in1.jpeg]
+![](../docs/images/sign_in/sign_in1.jpeg)
 
 签到后：
 
-!()[../docs/images/sign_in/sign_in2.jpeg]
+![](../docs/images/sign_in/sign_in2.jpeg)
 
 ## 表结构设计
 ```
