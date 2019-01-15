@@ -15,4 +15,12 @@
 
 ![](../docs/images/lucky_star/lucky_star3.jpeg)
 
+我的抽奖码列表：
+
+![](../docs/images/lucky_star/lucky_star4.jpeg)
+
+中奖幸运用户名单：
+
+![](../docs/images/lucky_star/lucky_star5.jpeg)
+
 ## 系统设计
