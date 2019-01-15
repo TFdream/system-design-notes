@@ -7,7 +7,7 @@
 | 第001期 | 用户注册/登录系统设计 | [user-registry-login](user-registry-login) | 已完成 | 
 | 第002期 | 用户签到 | [user-sign-in](user-sign-in) | 已完成 | 
 | 第003期 | 邀请好友 | [user-invite-friends](user-invite-friends) | 敬请期待... | 
-| 第004期 | 排行榜系统设计 | race-rank | 敬请期待... | 
+| 第004期 | 排行榜 | [race-rank](race-rank) | 敬请期待... | 
 | 第005期 | 刮刮卡/大转盘/砸宝箱 类系统设计 | [select-gifts](select-gifts) | 敬请期待... | 
 | 第006期 | 奖品兑换系统设计 | user-award-exchange | 敬请期待... | 
 | 第007期 | 用户中奖动态功能设计 | user-award-trending | 敬请期待... | 
