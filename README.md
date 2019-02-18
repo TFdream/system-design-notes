@@ -10,7 +10,7 @@
 | 第004期 | 排行榜 | [race-rank](race-rank) | 敬请期待... | 
 | 第005期 | 刮刮卡/大转盘/砸宝箱 类系统设计 | [select-gifts](select-gifts) | 敬请期待... | 
 | 第006期 | 奖品兑换系统设计 | user-award-exchange | 敬请期待... | 
-| 第007期 | 限时兑换系统设计 | seckill | 敬请期待... | 
+| 第007期 | 限时兑换(秒杀)系统设计 | seckill | 敬请期待... | 
 | 第008期 | 用户中奖动态功能设计 | user-award-trending | 敬请期待... | 
 | 第009期 | 抽奖码 | [lucky-star](lucky-star) | 敬请期待... | 
 | 第010期 | 在线答题 | [online-qa](online-qa) | 敬请期待... | 
