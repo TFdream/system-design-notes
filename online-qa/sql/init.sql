@@ -4,7 +4,7 @@ CREATE TABLE `question` (
 `question_no` varchar(40) NOT NULL COMMENT '题目编号',
 `subject` varchar(256) NOT NULL COMMENT '题目内容',
 `question_type` tinyint(2) NOT NULL DEFAULT 1 COMMENT '试题类型 1:单选, 2:多选, 3:判断',
-`right_option_id` varchar(16) NOT NULL COMMENT '正确选项id, 多个答案逗号分隔',
+`right_option_no` varchar(16) NOT NULL COMMENT '正确选项id, 多个答案逗号分隔',
 `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '状态 1:未审核, 2:已审核通过, 3:已删除',
 `create_time` datetime NOT NULL COMMENT '创建时间',
 `update_time` datetime NOT NULL COMMENT '更新时间',
