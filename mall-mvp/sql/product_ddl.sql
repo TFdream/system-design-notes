@@ -206,7 +206,7 @@ CREATE TABLE `product_sku` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_product_id` (`product_id`),
+  KEY `idx_product_id_display_order` (`product_id`, `display_order`),
   KEY `idx_shop_id_product_code` (`shop_id`, `product_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品规格信息表';
 
@@ -222,12 +222,12 @@ CREATE TABLE `product_spec_option` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_product_id` (`product_id`)
+  KEY `idx_product_id_display_order` (`product_id`, `display_order`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品规格项-名称表';
 
 CREATE TABLE `product_spec_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键ID',
-  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `shop_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺ID',
   `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   
   `spec_id` int(11) unsigned NOT NULL  COMMENT '商品规格项id 关联product_spec_option表主键ID',
@@ -239,7 +239,7 @@ CREATE TABLE `product_spec_item` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_product_id` (`product_id`),
+  KEY `idx_product_id_display_order` (`product_id`, `display_order`),
   KEY `idx_spec_id` (`spec_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品规格项-取值表';
 
