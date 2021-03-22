@@ -92,14 +92,14 @@ CREATE TABLE `product_category_map` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `shop_id` int(11) unsigned NOT NULL COMMENT '店铺ID',
   `category_id` int(11) unsigned NOT NULL COMMENT '分类ID',
-  `goods_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uniq_shop_category_id` (`shop_id`, `category_id`, `goods_id`)
+  UNIQUE KEY `uniq_shop_category_id` (`shop_id`, `category_id`, `product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类对应关系表';
 
 
@@ -121,7 +121,7 @@ CREATE TABLE `product_group_map` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `shop_id` int(11) NOT NULL COMMENT '店铺ID',
   
-  `goods_id` bigint(20) NOT NULL COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   `group_id` int(11) NOT NULL COMMENT '分组ID',
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
@@ -129,7 +129,7 @@ CREATE TABLE `product_group_map` (
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uniq_shop_group_id` (`shop_id`, `group_id`, `goods_id`)
+  UNIQUE KEY `uniq_shop_group_id` (`shop_id`, `group_id`, `product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分组对应关系表';
 
 CREATE TABLE `product_label` (
@@ -151,14 +151,14 @@ CREATE TABLE `product_label_map` (
 
   `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
   `label_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品标签ID',
-  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
 
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_goods_id` (`shop_id`, `goods_id`),
+  KEY `idx_goods_id` (`shop_id`, `product_id`),
   KEY `idx_laber_id` (`label_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品标签对应关系表'
 
@@ -166,7 +166,7 @@ CREATE TABLE `product_label_map` (
 CREATE TABLE `product_sku` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键ID',
   `shop_id` int(11) unsigned NOT NULL COMMENT '店铺ID',
-  `goods_id` bigint(20) unsigned  NOT NULL COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '规格名称',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '规格图片链接',
   `price` decimal(12,2) NOT NULL COMMENT '售卖价格',
@@ -189,14 +189,14 @@ CREATE TABLE `product_sku` (
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_goods_id` (`goods_id`),
+  KEY `idx_product_id` (`product_id`),
   KEY `idx_shop_id_product_code` (`shop_id`, `product_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品规格信息表';
 
 CREATE TABLE `product_spec_option` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键ID',
   `shop_id` int(11) unsigned NOT NULL COMMENT '店铺ID',
-  `goods_id` bigint(20) unsigned  NOT NULL COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '商品规格项名称',
   
@@ -205,14 +205,13 @@ CREATE TABLE `product_spec_option` (
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_goodsid` (`goods_id`),
-  KEY `idx_shopid` (`shop_id`)
+  KEY `idx_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品规格项-名称表';
 
 CREATE TABLE `product_spec_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键ID',
   `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
-  `goods_id` bigint(20) unsigned  NOT NULL COMMENT '商品ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
   
   `spec_id` int(11) unsigned NOT NULL  COMMENT '商品规格项id 关联product_spec_option表主键ID',
 
@@ -223,6 +222,19 @@ CREATE TABLE `product_spec_item` (
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_goods_id` (`goods_id`),
+  KEY `idx_product_id` (`product_id`),
   KEY `idx_spec_id` (`spec_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品规格项-取值表';
+
+CREATE TABLE `product_perm_map` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `product_id` bigint(20) unsigned NOT NULL COMMENT '商品ID',
+  `perm_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '权限类型 0:浏览 1:购买',
+  `member_type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '用户类型 1:会员等级 2:会员标签',
+  `type_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户身份ID',
+  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_product_id` (`product_id`, `perm_type`, `type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品权限表';
