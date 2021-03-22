@@ -20,6 +20,10 @@ product_spec_item表如下：
 product_sku表数据如下：
 ![image](https://user-images.githubusercontent.com/13992911/111977486-bf14a800-8b3d-11eb-9d2d-0f78b09fcc79.png)
 
+### 商品浏览权限
+
+### 商品库快照
+
 
 ## 营销模块
 
