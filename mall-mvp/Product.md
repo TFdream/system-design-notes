@@ -13,7 +13,7 @@
 ![image](https://user-images.githubusercontent.com/13992911/111982309-c63eb480-8b43-11eb-9193-26d17929b23c.png)
 
 ### 数据库DDL
-[数据库DDL](sql/product_ddl.sql)
+[数据库DDL](/mall-mvp/sql/product_ddl.sql)
 
 ### 商品规格
 一共3张表：
