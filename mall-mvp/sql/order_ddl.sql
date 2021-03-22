@@ -55,7 +55,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 
-CREATE TABLE `es_shop_order_item` (
+CREATE TABLE `order_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
   `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单ID',
@@ -89,4 +89,26 @@ CREATE TABLE `es_shop_order_item` (
   KEY `idx_product_id` (`product_id`),
   KEY `idx_order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+
+
+CREATE TABLE `order_package` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `product_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `order_item_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单商品ID',
+  `no_express` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否需要快递 0:需要 1:无需快递',
+  `express_id` int(11) NOT NULL DEFAULT '0' COMMENT '快递公司ID，关联es_core_express表id',
+  `express_sn` varchar(50) NOT NULL DEFAULT '' COMMENT '快递单号',
+  `remark` text NOT NULL COMMENT '订单发货备注',
+  `send_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '发货时间',
+  `upload_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上传物流时间',
+  `finish_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '完成时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_order_item_id` (`order_item_id`),
+  KEY `idx_order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单物流信息表';
+
 
