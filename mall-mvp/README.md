@@ -26,6 +26,52 @@ product_sku表数据如下：
 
 
 ## 营销模块
+[数据库DDL](sql/activity_ddl.sql)
+
+shop_activity表如下：
+![image](https://user-images.githubusercontent.com/13992911/111981480-b5417380-8b42-11eb-8244-592fc320498d.png)
+
+shop_activity_map表如下：
+![image](https://user-images.githubusercontent.com/13992911/111981604-da35e680-8b42-11eb-9cf1-58d9e2a2fa5a.png)
+
+其中，rules为规格配置：
+```
+[
+    {
+        "type":"1",
+        "value":"0",
+        "max":"2500"
+    },
+    {
+        "type":"2",
+        "value":"1",
+        "max":"2500"
+    },
+    {
+        "type":"2",
+        "value":"2",
+        "max":"3000"
+    },
+    {
+        "type":"2",
+        "value":"3",
+        "max":"3191"
+    },
+    {
+        "type":"3",
+        "value":"10",
+        "max":"2999"
+    },
+    {
+        "type":"3",
+        "value":"12",
+        "max":"2599"
+    }
+]
+```
+
+其中，type取值 1:全部会员 2:会员等级 3:会员标签
+
 
 ## 订单模块
 
