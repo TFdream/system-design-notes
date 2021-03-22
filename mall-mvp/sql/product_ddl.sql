@@ -1,5 +1,22 @@
 
-CREATE DATABASE  `mall_mvp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE `mall_mvp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `product`;
+
+DROP TABLE IF EXISTS `product_category`;
+DROP TABLE IF EXISTS `product_category_map`;
+
+DROP TABLE IF EXISTS `product_group`;
+DROP TABLE IF EXISTS `product_group_map`;
+
+DROP TABLE IF EXISTS `product_label`;
+DROP TABLE IF EXISTS `product_label_map`;
+
+DROP TABLE IF EXISTS `product_sku`;
+DROP TABLE IF EXISTS `product_spec_option`;
+DROP TABLE IF EXISTS `product_spec_item`;
+
+DROP TABLE IF EXISTS `product_perm_map`;
 
 CREATE TABLE `product` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
