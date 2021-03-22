@@ -177,7 +177,7 @@ CREATE TABLE `product_label_map` (
   PRIMARY KEY (`id`),
   KEY `idx_goods_id` (`shop_id`, `product_id`),
   KEY `idx_laber_id` (`label_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品标签对应关系表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品标签对应关系表';
 
 
 CREATE TABLE `product_sku` (
