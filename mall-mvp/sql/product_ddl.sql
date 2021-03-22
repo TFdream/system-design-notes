@@ -60,7 +60,7 @@ CREATE TABLE `product` (
   `putaway_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上架时间',
   `sellout_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '售罄时间',
   `delete_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`),
@@ -82,7 +82,7 @@ CREATE TABLE `product_category` (
 
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`, `parent_id`)
@@ -96,7 +96,7 @@ CREATE TABLE `product_category_map` (
   
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_shop_category_id` (`shop_id`, `category_id`, `product_id`)
@@ -111,7 +111,7 @@ CREATE TABLE `product_group` (
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shopid` (`shop_id`)
@@ -126,7 +126,7 @@ CREATE TABLE `product_group_map` (
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_shop_group_id` (`shop_id`, `group_id`, `product_id`)
@@ -140,7 +140,7 @@ CREATE TABLE `product_label` (
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
   
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`)
@@ -155,7 +155,7 @@ CREATE TABLE `product_label_map` (
 
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_goods_id` (`shop_id`, `product_id`),
@@ -186,7 +186,7 @@ CREATE TABLE `product_sku` (
 
   `display_order` smallint(4) NOT NULL DEFAULT '0' COMMENT '展示顺序 越小越靠前',
   
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_product_id` (`product_id`),
@@ -202,7 +202,7 @@ CREATE TABLE `product_spec_option` (
   
   `display_order` smallint(4) NOT NULL DEFAULT '0' COMMENT '展示顺序 越小越靠前',
   
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_product_id` (`product_id`)
@@ -219,7 +219,7 @@ CREATE TABLE `product_spec_item` (
 
   `display_order` smallint(4) NOT NULL DEFAULT '0' COMMENT '展示顺序 越小越靠前',
 
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_product_id` (`product_id`),
@@ -233,7 +233,8 @@ CREATE TABLE `product_perm_map` (
   `perm_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '权限类型 0:浏览 1:购买',
   `member_type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '用户类型 1:会员等级 2:会员标签',
   `type_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户身份ID',
-  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_product_id` (`product_id`, `perm_type`, `type_id`)
