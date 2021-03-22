@@ -54,3 +54,39 @@ CREATE TABLE `order` (
   KEY `idx_member_id` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
+
+CREATE TABLE `es_shop_order_item` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `product_id`bigint(20) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `product_version` int(11) NOT NULL DEFAULT '0' COMMENT '商品版本号',
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '订单商品状态 0:未支付 1:已支付',
+  `cash_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际付现金金额',
+  `price_unit` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品售价（单价）',
+  `price_original` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品划线价',
+  `price_discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品折扣（包括：积分+优惠券）',
+  `cost_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品成本价',
+  `coupon_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '抵扣优惠券金额',
+  `deduct_credit` int(11) NOT NULL COMMENT '使用积分',
+  `max_credit` int(11) NOT NULL COMMENT '最大可使用积分',
+  `total` int(11) NOT NULL DEFAULT '1' COMMENT '购买数量数量',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `option_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品规格ID',
+  `option_title` varchar(255) NOT NULL DEFAULT '' COMMENT '商品规格名称',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '商品图片',
+  `goods_code` varchar(255) NOT NULL DEFAULT '' COMMENT '商品编码',
+  `refund_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '商品维权状态 0:未维权 1:维权中 2:维权完成',
+  `refund_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '商品维权类型 0:未维权 1:仅退款 2:退货退款 3:换货',
+  `refund_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品维权记录ID，关联es_shop_order_refund表id',
+  `package_id` int(11) NOT NULL DEFAULT '0' COMMENT '商品物流记录ID，关联es_shop_order_package表id ',
+  `comment_status` tinyint(1) NOT NULL DEFAULT '0',
+
+  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_product_id` (`product_id`),
+  KEY `idx_order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单商品表';
+
