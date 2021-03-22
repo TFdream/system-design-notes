@@ -3,6 +3,18 @@
 ## 商品模块
 [数据库DDL](sql/product_ddl.sql)
 
+功能截图如下：
+![image](https://user-images.githubusercontent.com/13992911/111982411-e66e7380-8b43-11eb-9545-652b83daa082.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111982453-f38b6280-8b43-11eb-8939-058353885e42.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111982190-a0191480-8b43-11eb-9244-e30f71c8d1f1.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111982245-b1622100-8b43-11eb-9bde-483d5a0cea31.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111982309-c63eb480-8b43-11eb-9193-26d17929b23c.png)
+
+
 ### 商品规格
 一共3张表：
 * product_sku
@@ -28,6 +40,14 @@ product_sku表数据如下：
 ## 营销模块
 [数据库DDL](sql/activity_ddl.sql)
 
+功能截图如下：
+![image](https://user-images.githubusercontent.com/13992911/111982501-04d46f00-8b44-11eb-96a6-aee6b40ac0d7.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111982588-1c135c80-8b44-11eb-8d6c-0b45e67c4605.png)
+
+![image](https://user-images.githubusercontent.com/13992911/111981993-63e5b400-8b43-11eb-927b-0cd0a7662a31.png)
+
+### 表数据
 shop_activity表如下：
 ![image](https://user-images.githubusercontent.com/13992911/111981480-b5417380-8b42-11eb-8244-592fc320498d.png)
 
