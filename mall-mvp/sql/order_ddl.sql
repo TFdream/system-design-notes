@@ -112,3 +112,48 @@ CREATE TABLE `order_package` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单物流信息表';
 
 
+
+CREATE TABLE `es_shop_order_refund` (
+ `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `shop_id` int(11) NOT NULL DEFAULT '0' COMMENT '店铺ID',
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `order_no` varchar(255) NOT NULL DEFAULT '' COMMENT '订单号',
+  `product_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `order_item_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单商品ID',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '维权类型 1:仅退款 2:退货退款 3:换货',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '维权状态',
+  `step` tinyint(3) NOT NULL DEFAULT '1' COMMENT '步骤',
+  `step1_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `step2_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `step3_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `step3_saler_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `step4_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `finish_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `saler_remark` varchar(255) NOT NULL DEFAULT '',
+  `deny_reason` varchar(255) NOT NULL DEFAULT '' COMMENT '拒绝理由',
+  `close_remark` varchar(255) NOT NULL DEFAULT '',
+  `original_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `apply_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '申请退款金额',
+  `real_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际退款金额',
+  `reason` varchar(255) NOT NULL DEFAULT '' COMMENT '申请退货理由',
+
+  `refund_address_id` int(11) NOT NULL DEFAULT '0',
+  `refund_address_name` varchar(30) NOT NULL DEFAULT '',
+  `refund_address_mobile` char(15) NOT NULL DEFAULT '',
+
+  `express_name` varchar(100) NOT NULL DEFAULT '' COMMENT '用户上传物流公司名称',
+  `express_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户上传物流公司编号',
+  `express_sn` varchar(100) NOT NULL DEFAULT '' COMMENT '用户上传物流单号',
+  `saler_express_name` varchar(100) NOT NULL DEFAULT '' COMMENT '卖家上传物流公司名称',
+  `saler_express_id` int(11) NOT NULL DEFAULT '0' COMMENT '卖家上传物流公司编号',
+  `saler_express_sn` varchar(100) NOT NULL DEFAULT '' COMMENT '卖家上传物流单号',
+  
+  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_member_id` (`member_id`),
+  KEY `idx_order_item_id` (`order_item_id`),
+  KEY `idx_order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单维权记录表';
+
