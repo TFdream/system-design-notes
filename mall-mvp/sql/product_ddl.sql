@@ -1,5 +1,5 @@
-CREATE DATABASE  `mall_mvp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE DATABASE  `mall_mvp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE `product` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -61,7 +61,7 @@ CREATE TABLE `product` (
   `sellout_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '售罄时间',
   `delete_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '删除时间',
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`),
   KEY `idx_create_time` (`create_time`),
@@ -83,7 +83,7 @@ CREATE TABLE `product_category` (
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`, `parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
@@ -97,8 +97,7 @@ CREATE TABLE `product_category_map` (
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
-  
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_shop_category_id` (`shop_id`, `category_id`, `goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分类对应关系表';
@@ -113,7 +112,7 @@ CREATE TABLE `product_group` (
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shopid` (`shop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分组表';
@@ -128,7 +127,7 @@ CREATE TABLE `product_group_map` (
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_shop_group_id` (`shop_id`, `group_id`, `goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品分组对应关系表';
@@ -140,9 +139,9 @@ CREATE TABLE `product_label` (
   `remark` varchar(512)  NOT NULL DEFAULT '' COMMENT '备注',
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
-
+  
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_shop_id` (`shop_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品标签表';
@@ -157,8 +156,7 @@ CREATE TABLE `product_label_map` (
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
 
   `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
-  
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_goods_id` (`shop_id`, `goods_id`),
   KEY `idx_laber_id` (`label_id`)
