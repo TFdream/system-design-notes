@@ -30,7 +30,7 @@ CREATE TABLE `bonus_task` (
 CREATE TABLE `bonus_user_task` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `round_num` smallint(5) unsigned DEFAULT 1 NOT NULL COMMENT '场次序号，从1开始',
+  `round_num` smallint(5) unsigned NOT NULL DEFAULT 1 COMMENT '场次序号，从1开始',
   `task_id` int(11) unsigned NOT NULL COMMENT '任务id，关联bonus_task表ID',
   `task_type` tinyint(2) unsigned NOT NULL COMMENT '任务类型，1:新手任务 2:限时任务',
   `start_time` datetime NOT NULL COMMENT '任务开始时间',
