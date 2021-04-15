@@ -30,16 +30,18 @@ CREATE TABLE `bonus_task` (
 CREATE TABLE `bonus_user_task` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `round_num` smallint(5) unsigned DEFAULT 1 NOT NULL COMMENT '场次序号，从1开始',
   `task_id` int(11) unsigned NOT NULL COMMENT '任务id，关联bonus_task表ID',
   `task_type` tinyint(2) unsigned NOT NULL COMMENT '任务类型，1:新手任务 2:限时任务',
-  `start_time` datetime NOT NULL COMMENT '本次任务开始时间',
-  `end_time` datetime NOT NULL COMMENT '本次任务结束时间',
+  `start_time` datetime NOT NULL COMMENT '任务开始时间',
+  `end_time` datetime NOT NULL COMMENT '任务截止时间',
   `state` tinyint(2) NOT NULL DEFAULT 1 COMMENT '任务状态 1:已领取(待完成) 2:已完成(获得奖励) 3:已过期(未完成)',
-  `version` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '乐观锁-版本号',
+  `version` int(10) unsigned NOT NULL DEFAULT 1 COMMENT '乐观锁-版本号',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '数据是被删除 0:否 1:是',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `idx_user_id_state` (`user_id`,`state`)
+  KEY `idx_user_id_state` (`user_id`, `round_num`, `state`),
+  KEY `idx_round_num` (`round_num`, `end_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户领取任务列表';
 ```
