@@ -5,7 +5,7 @@
 任务表：
 ```
 CREATE TABLE `bonus_task` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `task_name` varchar(128) NOT NULL DEFAULT '' COMMENT '任务名称',
   `type` tinyint(2) NOT NULL COMMENT '任务类型，1:新手任务 2:限时任务',
   `cycle_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '任务周期类型 0:不重复 1:每日一次 2:每周一次 3:每月一次 4:自定义周期',
