@@ -35,7 +35,7 @@ CREATE TABLE `bonus_user_task` (
   `task_type` tinyint(2) unsigned NOT NULL COMMENT '任务类型，1:新手任务 2:限时任务',
   `start_time` datetime NOT NULL COMMENT '任务开始时间',
   `end_time` datetime NOT NULL COMMENT '任务截止时间',
-  `state` tinyint(2) NOT NULL DEFAULT 1 COMMENT '任务状态 1:已领取(任务待完成) 2:任务已完成(待领取奖励) 3:已领取奖励 4:已过期(未完成)',
+  `state` tinyint(2) NOT NULL DEFAULT 1 COMMENT '任务状态 1:已领取(任务待完成) 2:任务已完成(待领取奖励) 3:已领取奖励 5:已过期(任务未完成且已过期)',
   `version` int(10) unsigned NOT NULL DEFAULT 1 COMMENT '乐观锁-版本号',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '数据是被删除 0:否 1:是',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
