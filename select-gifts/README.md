@@ -5,6 +5,8 @@
 
 ### 案例1
 认真商城 
+![](../docs/images/lottery_award/choujian.png)
+
 ![image](https://user-images.githubusercontent.com/13992911/114980382-f5d0aa80-9ebe-11eb-8aa6-fd4f6ecf10fa.png)
 
 
