@@ -8,7 +8,7 @@
 ## 会员模块
 
 ## 商品模块
-[详细说明](Product.md)
+[详细说明](https://github.com/TFdream/system-design-notes/issues/7)
 
 ## 促销模块
 在电商和O2O领域，促销是运营人员的一个主要的让利行为，同时促销活动期间的购买量也较之普通商品更高，不同的阶段，对于促销的要求也是不同的。
