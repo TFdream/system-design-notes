@@ -7,8 +7,8 @@
 ```
 CREATE TABLE `es_shop_order_package` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `shop_id` int(11) NOT NULL COMMENT '店铺ID',
-  `member_id` int(11) NOT NULL COMMENT '会员ID',
+  `shop_id` int(11) unsigned NOT NULL COMMENT '店铺ID',
+  `member_id` int(11) unsigned NOT NULL COMMENT '会员ID',
   `order_id` int(11) unsigned NOT NULL COMMENT '订单ID',
   `order_goods_id` bigint(20) unsigned  NOT NULL COMMENT '订单商品ID',
   `is_split` tinyint(1) NOT NULL DEFAULT '0' COMMENT '物流是否拆分为多个快递 1:是 0:否',
