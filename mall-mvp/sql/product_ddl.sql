@@ -98,7 +98,13 @@ CREATE TABLE `product_category` (
   `display_order` smallint(4) NOT NULL DEFAULT '0' COMMENT '展示顺序 越小越靠前',
 
   `state` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
+  
+  `created_by_id` int(11) NOT NULL DEFAULT '0' COMMENT '创建人ID',
+  `created_by_name` int(11) NOT NULL DEFAULT '0' COMMENT '创建人昵称',
 
+  `modified_by_id` int(11) NOT NULL DEFAULT '0' COMMENT '修改人ID',
+  `modified_by_name` int(11) NOT NULL DEFAULT '0' COMMENT '修改人昵称',
+  
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -127,7 +133,13 @@ CREATE TABLE `product_group` (
   `remark` varchar(512)  NOT NULL DEFAULT '' COMMENT '备注',
   
   `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1:正常 0:无效',
+  
+  `created_by_id` int(11) NOT NULL DEFAULT '0' COMMENT '创建人ID',
+  `created_by_name` int(11) NOT NULL DEFAULT '0' COMMENT '创建人昵称',
 
+  `modified_by_id` int(11) NOT NULL DEFAULT '0' COMMENT '修改人ID',
+  `modified_by_name` int(11) NOT NULL DEFAULT '0' COMMENT '修改人昵称',
+  
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
